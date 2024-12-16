@@ -1,75 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mad Libs Generator</title>
+    <title>Interactive Mad Libs</title>
     <style>
-        /* CSS goes here */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 50px auto;
             max-width: 600px;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
+        .mad-lib-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two-column layout */
+            gap: 10px;
+            align-items: center;
+            text-align: left;
+            margin-top: 30px;
         }
-        #mad-lib-result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-style: italic;
-            color: #333;
+        .mad-lib-container div {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .mad-lib-container span {
+            font-weight: bold;
+            color: #007BFF;
         }
         .section {
             margin-bottom: 30px;
         }
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .cubby {
+            text-align: center;
+            margin: auto;
+        }
     </style>
     <script>
-        // JavaScript goes here
-        document.addEventListener("DOMContentLoaded", function() {
-            const button = document.getElementById("generate-mad-lib");
-            const resultDiv = document.getElementById("mad-lib-result");
-
+        document.addEventListener("DOMContentLoaded", function () {
             // Lists for random selection
             const times = ["yesterday", "this morning", "last night", "a week ago"];
             const places = ["grocery store", "library", "beach", "amusement park"];
             const items = ["book", "banana", "pair of shoes", "souvenir"];
             const events = ["birthday party", "wedding", "concert", "game night"];
 
-            button.addEventListener("click", function() {
-                // Randomly select an item from each list
-                const randomTime = times[Math.floor(Math.random() * times.length)];
-                const randomPlace = places[Math.floor(Math.random() * places.length)];
-                const randomItem = items[Math.floor(Math.random() * items.length)];
-                const randomEvent = events[Math.floor(Math.random() * events.length)];
+            // References to mad lib parts
+            const helloSpan = document.getElementById("hello");
+            const timeSpan = document.getElementById("time");
+            const placeSpan = document.getElementById("place");
+            const itemSpan = document.getElementById("item");
+            const eventSpan = document.getElementById("event");
 
-                // Construct the mad lib
-                const madLib = `${randomTime} I went to the ${randomPlace} to buy a ${randomItem} to bring to my friend's ${randomEvent}.`;
+            // Function to update a mad lib part
+            function updateMadLibPart(part, list) {
+                const randomValue = list[Math.floor(Math.random() * list.length)];
+                part.textContent = randomValue;
+            }
 
-                // Display the result
-                resultDiv.textContent = madLib;
+            // Attach event listeners for each button
+            document.getElementById("update-hello").addEventListener("click", function () {
+                const greeting = prompt("Enter a greeting:", "Hello!");
+                if (greeting) helloSpan.textContent = greeting;
+            });
+            document.getElementById("update-time").addEventListener("click", function () {
+                updateMadLibPart(timeSpan, times);
+            });
+            document.getElementById("update-place").addEventListener("click", function () {
+                updateMadLibPart(placeSpan, places);
+            });
+            document.getElementById("update-item").addEventListener("click", function () {
+                updateMadLibPart(itemSpan, items);
+            });
+            document.getElementById("update-event").addEventListener("click", function () {
+                updateMadLibPart(eventSpan, events);
             });
         });
     </script>
 </head>
 <body>
     <div class="section">
-        <h1>Welcome to the Mad Libs Generator</h1>
-        <p>Have fun generating a silly story by clicking the button below!</p>
+        <h1>Interactive Mad Libs</h1>
+        <p>Click on a button to update specific parts of the story!</p>
+    </div>
+
+    <div class="mad-lib-container">
+        <!-- Hello Section -->
+        <div class="cubby">
+            <span id="hello">Hello!</span>
+            <br>
+            <button id="update-hello">Change Greeting</button>
+        </div>
+
+        <!-- Time Section -->
+        <div class="cubby">
+            <span id="time">[random time]</span>
+            <br>
+            <button id="update-time">Change Time</button>
+        </div>
+
+        <!-- Place Section -->
+        <div class="cubby">
+            <span id="place">[random place]</span>
+            <br>
+            <button id="update-place">Change Place</button>
+        </div>
+
+        <!-- Item Section -->
+        <div class="cubby">
+            <span id="item">[random item]</span>
+            <br>
+            <button id="update-item">Change Item</button>
+        </div>
+
+        <!-- Event Section -->
+        <div class="cubby">
+            <span id="event">[random event]</span>
+            <br>
+            <button id="update-event">Change Event</button>
+        </div>
     </div>
 
     <div class="section">
-        <h2>Mad Libs:</h2>
-        <p id="mad-lib-template">[random time from list] I went to the [random place from list] to buy a [random item from list] to bring to my friend's [random event from list]</p>
-        <button id="generate-mad-lib">Generate Mad Lib</button>
-        <div id="mad-lib-result"></div>
-    </div>
-
-    <div class="section">
-        <h2>Enjoy Your Mad Libs!</h2>
-        <p>Click as many times as you'd like to see new, hilarious combinations.</p>
+        <h2>Your Completed Mad Lib:</h2>
+        <p class="mad-lib">
+            <span id="hello">Hello!</span> 
+            <span id="time">[random time]</span> I went to the 
+            <span id="place">[random place]</span> to buy a 
+            <span id="item">[random item]</span> to bring to my friend's 
+            <span id="event">[random event]</span>.
+        </p>
     </div>
 </body>
 </html>
