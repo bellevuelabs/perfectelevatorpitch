@@ -1,43 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Website</title>
+    <title>Mad Libs Generator</title>
     <style>
         /* CSS goes here */
-        body { 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            margin-top: 50px; 
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px auto;
+            max-width: 600px;
         }
-        button { 
-            padding: 10px 20px; 
-            font-size: 16px; 
-            cursor: pointer; 
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
         }
-        #random-number { 
-            margin-top: 20px; 
-            font-size: 24px; 
-            color: #007BFF; 
+        #mad-lib-result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-style: italic;
+            color: #333;
+        }
+        .section {
+            margin-bottom: 30px;
         }
     </style>
     <script>
         // JavaScript goes here
         document.addEventListener("DOMContentLoaded", function() {
-            const button = document.getElementById("generate-button");
-            const display = document.getElementById("random-number");
+            const button = document.getElementById("generate-mad-lib");
+            const resultDiv = document.getElementById("mad-lib-result");
+
+            // Lists for random selection
+            const times = ["yesterday", "this morning", "last night", "a week ago"];
+            const places = ["grocery store", "library", "beach", "amusement park"];
+            const items = ["book", "banana", "pair of shoes", "souvenir"];
+            const events = ["birthday party", "wedding", "concert", "game night"];
 
             button.addEventListener("click", function() {
-                // Generate a random number between 1 and 10
-                const randomNumber = Math.floor(Math.random() * 10) + 1;
-                display.textContent = "Random Number: " + randomNumber;
+                // Randomly select an item from each list
+                const randomTime = times[Math.floor(Math.random() * times.length)];
+                const randomPlace = places[Math.floor(Math.random() * places.length)];
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                const randomEvent = events[Math.floor(Math.random() * events.length)];
+
+                // Construct the mad lib
+                const madLib = `${randomTime} I went to the ${randomPlace} to buy a ${randomItem} to bring to my friend's ${randomEvent}.`;
+
+                // Display the result
+                resultDiv.textContent = madLib;
             });
         });
     </script>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <p>Click the button below to generate a random number between 1 and 10:</p>
-    <button id="generate-button">Generate Random Number</button>
-    <div id="random-number"></div>
+    <div class="section">
+        <h1>Welcome to the Mad Libs Generator</h1>
+        <p>Have fun generating a silly story by clicking the button below!</p>
+    </div>
+
+    <div class="section">
+        <h2>Mad Libs:</h2>
+        <p id="mad-lib-template">[random time from list] I went to the [random place from list] to buy a [random item from list] to bring to my friend's [random event from list]</p>
+        <button id="generate-mad-lib">Generate Mad Lib</button>
+        <div id="mad-lib-result"></div>
+    </div>
+
+    <div class="section">
+        <h2>Enjoy Your Mad Libs!</h2>
+        <p>Click as many times as you'd like to see new, hilarious combinations.</p>
+    </div>
 </body>
 </html>
